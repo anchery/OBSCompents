@@ -1,0 +1,37 @@
+﻿@using System.Collections
+
+<EditForm class="form-group" Model="@items">
+        <div class="form-group">
+            <label class="control-label col-sm-2" style="padding-top:0.5em;">@Caption</label>
+            @foreach (var r in items)
+            {
+                var id = r.ItemText + r.ItemId.ToString();
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id=@id name="rg@(Caption)" @onclick="@(e => SetResponseValue(r.ItemId))">
+                    <label class="custom-control-label" for=@id>@r.ItemText</label>
+                </div>
+            }
+        </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public List<MetaItemModel> items { get; set; }
+
+    //[Parameter]
+    protected DictionaryEntry resp { get; set; }
+
+    [Parameter]
+    public EventCallback<DictionaryEntry> respChanged { get; set; }
+
+    private void SetResponseValue(int val)
+    {
+        DictionaryEntry de = new DictionaryEntry(Caption, val);
+        resp = de;
+        respChanged.InvokeAsync(resp);
+    }
+}

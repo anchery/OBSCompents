@@ -9,6 +9,11 @@ namespace OBSCompents.Models
         public int GrpId { get; set; }
         public string GrpText { get; set; }
     }
+    public class MetaItemModel
+    {
+        public int ItemId { get; set; }
+        public string ItemText { get; set; }
+    }
     public class ObservationModel
     {
         public int ObsId { get; set; }

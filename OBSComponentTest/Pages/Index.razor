@@ -1,0 +1,64 @@
+﻿@page "/"
+@using System.Collections
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<EditForm class="form-group" Model="@model" OnValidSubmit="SaveData">
+    <div class="container">
+        <div>
+            <ComponentContextRB Caption="Gender" items="@lstGender" respChanged="SelectionChanged"></ComponentContextRB>
+        </div>
+        <div>
+            <ComponentDD Caption="Race/Ethnicity" items="@lstRace" respChanged="SelectionChanged"></ComponentDD>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    protected int gender;
+    protected int race;
+    ObservationModel model = new ObservationModel();
+    private List<MetaItemModel> lstGender = new List<MetaItemModel>()
+    {
+        new MetaItemModel { ItemId=1, ItemText="Male"},
+        new MetaItemModel { ItemId=2, ItemText="Female"}
+    };
+    private List<MetaItemModel> lstRace = new List<MetaItemModel>()
+    {
+        new MetaItemModel { ItemId=1, ItemText="African"},
+        new MetaItemModel { ItemId=2, ItemText="Asian"},
+        new MetaItemModel { ItemId=3, ItemText="Hisp"}
+    };
+    private void SaveData()
+    {
+        Console.WriteLine(gender);
+    }
+    protected void SelectionChanged(DictionaryEntry val)
+    {
+        try
+        {
+            switch (val.Key.ToString())
+            {
+                case "Gender":
+                    int.TryParse(val.Value.ToString(), out gender);
+                    break;
+                case "Race/Ethnicity":
+                    int.TryParse(val.Value.ToString(),out race);
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+    }
+}
