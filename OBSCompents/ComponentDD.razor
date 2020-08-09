@@ -2,13 +2,16 @@
 
 <EditForm class="form-group" Model="@items">
     <div class="form-group">
-        <label class="control-label col-sm-2" style="padding-top:0.5em;">@Caption</label>
-        <select class="form-control col-4" @onchange="SetResponseValue">
+        <label class="control-label col-sm-3" style="margin:0px;padding:0px;">@Caption</label>
+        @* Remove custom-control-inline to move ddl to the next line*@
+        <select class="form-control col-sm-4 custom-control-inline" style="padding:0px 15px;" @onchange="SetResponseValue">
+
+            <option value="-1"></option>
             @foreach (MetaItemModel r in items)
             {
                 <option value=@r.ItemId>@r.ItemText</option>
             }
-            </select>
+        </select>
     </div>
 </EditForm>
 
