@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using System.Collections
 
-<h1>Hello, world!</h1>
+<h1>Test Components</h1>
 
 
 <EditForm class="form-group" Model="@model" OnValidSubmit="SaveData">
@@ -12,6 +12,13 @@
         <div>
             <ComponentDD Caption="Race/Ethnicity" items="@lstRace" respChanged="SelectionChanged"></ComponentDD>
         </div>
+        <div>
+            @foreach (ObservationViewModel obs in ObsList)
+            {
+                <ComponentOBSGroup @bind-resp="resp" @bind-resp:event="respChanged" Obs="@obs" hasComments="true"></ComponentOBSGroup>
+            }
+        </div>
+
 
         <div>
             <button class="btn btn-primary" type="submit">Submit</button>
@@ -23,18 +30,53 @@
 @code {
     protected int gender;
     protected int race;
+    protected List<ResponseModel> resp = new List<ResponseModel>();
+    private static List<ResponseTypeModel> respType = new List<ResponseTypeModel>()
+{
+            new ResponseTypeModel {ResponseId=1,ResponseText="Safe"},
+            new ResponseTypeModel {ResponseId=2,ResponseText="At-Risk"},
+    };
+
+    private static List<ObservationModel> obsItems1 = new List<ObservationModel>()
+{
+        new ObservationModel { ObsId=1, ObsText="1.1 Clear of \"line of fire\" or suspended loads"},
+        new ObservationModel { ObsId=2, ObsText="1.2 Clear of pinch points, sharp edges and cold/hot sufgaces"},
+        new ObservationModel { ObsId=3, ObsText="1.3 Points of contact: ascensing/descending stairs, ladders, equipment"},
+        new ObservationModel { ObsId=4, ObsText="1.4 Body mechanics when lifting/lowering, pushing/pulling"},
+        new ObservationModel { ObsId=5, ObsText="1.5 Eyes on path, task, hands"}
+    };
+
+    private static List<ObservationModel> obsItems2 = new List<ObservationModel>()
+{
+        new ObservationModel { ObsId=1, ObsText="2.1 Hand protection (appropriate gloves for task"},
+        new ObservationModel { ObsId=2, ObsText="2.2 Hard hat, eye/face protection, footwear/traction devices, hearing protection"},
+        new ObservationModel { ObsId=3, ObsText="2.3 Respitory protection"},
+        new ObservationModel { ObsId=4, ObsText="2.4 Fall protection/safety harness"},
+        new ObservationModel { ObsId=5, ObsText="2.5 Gas Monitor"}
+    };
+
+    public List<ObservationViewModel> ObsList = new List<ObservationViewModel>()
+{
+        new ObservationViewModel { GrpId=1, GrpText="1.0 Body Position", observations=obsItems1, responseTypes=respType},
+        new ObservationViewModel { GrpId=2, GrpText="2.0 Personal Protective Equipment", observations=obsItems2, responseTypes=respType}
+    };
+
     ObservationModel model = new ObservationModel();
     private List<MetaItemModel> lstGender = new List<MetaItemModel>()
-    {
+{
         new MetaItemModel { ItemId=1, ItemText="Male"},
         new MetaItemModel { ItemId=2, ItemText="Female"}
     };
     private List<MetaItemModel> lstRace = new List<MetaItemModel>()
-    {
+{
         new MetaItemModel { ItemId=1, ItemText="African"},
         new MetaItemModel { ItemId=2, ItemText="Asian"},
         new MetaItemModel { ItemId=3, ItemText="Hisp"}
     };
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
     private void SaveData()
     {
         Console.WriteLine(gender);
@@ -49,7 +91,7 @@
                     int.TryParse(val.Value.ToString(), out gender);
                     break;
                 case "Race/Ethnicity":
-                    int.TryParse(val.Value.ToString(),out race);
+                    int.TryParse(val.Value.ToString(), out race);
                     break;
             }
         }
