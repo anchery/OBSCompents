@@ -2,9 +2,9 @@
 
 <EditForm class="form-group" Model="@items">
     <div class="form-group">
-        <label class="control-label col-sm-3" style="margin:0px;padding:0px;">@Caption</label>
+        <label class="control-label col-sm-@(labelWidth)" style="margin:0px;padding:0px;">@Caption</label>
         @* Remove custom-control-inline to move ddl to the next line*@
-        <select class="form-control col-sm-4 custom-control-inline" style="padding:0px 15px;" @onchange="SetResponseValue">
+        <select class="form-control col-sm-@(ddlWidth) custom-control-inline" style="padding:0px 15px;" @onchange="SetResponseValue">
 
             <option value="-1"></option>
             @foreach (MetaItemModel r in items)
@@ -22,6 +22,12 @@
 
     [Parameter]
     public List<MetaItemModel> items { get; set; }
+
+    [Parameter]
+    public string labelWidth { get; set; } = "3";
+
+    [Parameter]
+    public string ddlWidth { get; set; } = "4";
 
     protected DictionaryEntry resp { get; set; }
 

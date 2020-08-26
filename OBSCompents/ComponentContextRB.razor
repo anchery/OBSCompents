@@ -2,7 +2,7 @@
 
 <EditForm class="form-group" Model="@items">
         <div class="form-group">
-            <label class="control-label col-sm-3" style="margin:0px;padding:0px;">@Caption</label>
+            <label class="control-label col-sm-@(labelWidth)" style="margin:0px;padding:0px;">@Caption</label>
             @foreach (var r in items)
             {
                 var id = r.ItemText + r.ItemId.ToString();
@@ -22,7 +22,9 @@
     [Parameter]
     public List<MetaItemModel> items { get; set; }
 
-    //[Parameter]
+    [Parameter]
+    public string labelWidth { get; set; } = "3";
+    
     protected DictionaryEntry resp { get; set; }
 
     [Parameter]

@@ -47,7 +47,9 @@
     {
         resp.Add(new ResponseModel { GrpId = obs.GrpId, ObsId = obsid, Response = val });
         string id = "cmnt" + obs.GrpId + obsid;
-        await jsRuntime.InvokeAsync<object>("ToggleComment", id);
+        
+        if(hasComments)
+            await jsRuntime.InvokeAsync<object>("ToggleComment", id);
         //await respChanged.InvokeAsync(resp);
     }
 

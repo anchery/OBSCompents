@@ -1,16 +1,14 @@
 ﻿@page "/"
 @using System.Collections
 
-<h1>Test Components</h1>
-
 
 <EditForm class="form-group" Model="@model" OnValidSubmit="SaveData">
     <div class="container">
         <div>
-            <ComponentContextRB Caption="Gender" items="@lstGender" respChanged="SelectionChanged"></ComponentContextRB>
+            <ComponentContextRB Caption="Gender" items="@lstGender" respChanged="SelectionChanged" labelWidth="2"></ComponentContextRB>
         </div>
         <div>
-            <ComponentDD Caption="Race/Ethnicity" items="@lstRace" respChanged="SelectionChanged"></ComponentDD>
+            <ComponentDD Caption="Race/Ethnicity" items="@lstRace" respChanged="SelectionChanged" labelWidth="2" ddlWidth="2"></ComponentDD>
         </div>
         <div>
             @foreach (ObservationViewModel obs in ObsList)
