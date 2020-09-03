@@ -4,12 +4,27 @@
 
 <EditForm class="form-group" Model="@model" OnValidSubmit="SaveData">
     <div class="container">
+
         <div>
-            <ComponentContextRB Caption="Gender" items="@lstGender" respChanged="SelectionChanged" labelWidth="2"></ComponentContextRB>
+            @foreach (ObservationViewModel obs in ObsList.Where(e => e.GrpId == 1))
+            {
+                <ComponentRBRight @bind-resp="resp" @bind-resp:event="respChanged" Obs="@obs" labelWidth="6"></ComponentRBRight>
+            }
         </div>
+        <div>
+            @foreach (ObservationViewModel obs in ObsList.Where(e => e.GrpId == 2))
+            {
+                <ComponentRBLeft @bind-resp="resp" @bind-resp:event="respChanged" Obs="@obs"></ComponentRBLeft>
+            }
+        </div>
+        <div>
+            <ComponentContextRB Caption="Gender" items="@lstGender1" respChanged="SelectionChanged" labelWidth="2"></ComponentContextRB>
+        </div>
+
         <div>
             <ComponentDD Caption="Race/Ethnicity" items="@lstRace" respChanged="SelectionChanged" labelWidth="2" ddlWidth="2"></ComponentDD>
         </div>
+
         <div>
             @foreach (ObservationViewModel obs in ObsList)
             {
@@ -60,7 +75,7 @@
     };
 
     ObservationModel model = new ObservationModel();
-    private List<MetaItemModel> lstGender = new List<MetaItemModel>()
+    private List<MetaItemModel> lstGender1 = new List<MetaItemModel>()
 {
         new MetaItemModel { ItemId=1, ItemText="Male"},
         new MetaItemModel { ItemId=2, ItemText="Female"}
@@ -71,14 +86,17 @@
         new MetaItemModel { ItemId=2, ItemText="Asian"},
         new MetaItemModel { ItemId=3, ItemText="Hisp"}
     };
+    
     protected override Task OnInitializedAsync()
     {
         return base.OnInitializedAsync();
     }
+
     private void SaveData()
     {
         Console.WriteLine(gender);
     }
+
     protected void SelectionChanged(DictionaryEntry val)
     {
         try
@@ -86,7 +104,7 @@
             switch (val.Key.ToString())
             {
                 case "Gender":
-                    int.TryParse(val.Value.ToString(), out gender);
+                    //int.TryParse(val.Value.ToString(), out gender);
                     break;
                 case "Race/Ethnicity":
                     int.TryParse(val.Value.ToString(), out race);

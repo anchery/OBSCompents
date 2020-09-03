@@ -5,9 +5,10 @@
             <label class="control-label col-sm-@(labelWidth)" style="margin:0px;padding:0px;">@Caption</label>
             @foreach (var r in items)
             {
-                var id = r.ItemText + r.ItemId.ToString();
+                var id = Caption+r.ItemText + r.ItemId.ToString();
+                var name = Caption;
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id=@id name="rg@(Caption)" @onclick="@(e => SetResponseValue(r.ItemId))">
+                    <input type="radio" class="custom-control-input" id=@id name=@name @onclick="@(e => SetResponseValue(r.ItemId))">
                     <label class="custom-control-label" for=@id>@r.ItemText</label>
                 </div>
             }

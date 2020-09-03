@@ -4,7 +4,7 @@
     {
         string id = "";
         <div>
-            <label class="control-label col-sm-4" style="padding-top:0.5em;">@o.ObsText</label>
+            <label class="control-label col-sm-@(labelWidth)" style="margin: 0px; padding-top:0.5em;padding-left:0px;">@o.ObsText</label>
             @foreach (ResponseTypeModel r in obs.responseTypes)
             {
                 id = obs.GrpId + "" + o.ObsId + "" + r.ResponseText;
@@ -28,6 +28,8 @@
     [Parameter]
     public EventCallback<List<ResponseModel>> respChanged { get; set; }
 
+    [Parameter]
+    public string labelWidth { get; set; } = "3";
 
     private void SetObsValue(int obsid, int val)
     {
